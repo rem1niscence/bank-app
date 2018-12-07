@@ -3,6 +3,7 @@ from django.core.validators import RegexValidator
 from django.contrib.auth import get_user_model
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+from django.utils import timezone
 
 
 class Profile(models.Model):
@@ -32,6 +33,8 @@ class Profile(models.Model):
     )
     gender = models.IntegerField(choices=GENDERS, default=MALE)
 
+    # The following two methods are for when an user is created, automatically
+    # fire the creation of the Profile model, saving all the related user info.
     @receiver(post_save, sender=get_user_model())
     def create_user_profile(sender, instance, created, **kwargs):
         if created:
@@ -40,3 +43,9 @@ class Profile(models.Model):
     @receiver(post_save, sender=get_user_model())
     def save_user_profile(sender, instance, **kwargs):
         instance.profile.save()
+
+    def get_age(self):
+        return timezone.now().year - self.date_of_birth.year
+
+    def __str__(self):
+        return f'{self.first_name} {self.last_name}'
