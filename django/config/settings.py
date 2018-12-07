@@ -34,7 +34,7 @@ INSTALLED_APPS = [
     # 3rd Party
     'crispy_forms',
 
-    # Local
+    # Local Apps
     'user',
     'core',
 
@@ -116,7 +116,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'America/Santo_Domingo'
 
 USE_I18N = True
 
@@ -128,4 +128,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
+STATIC_URL = '/static'
+
 STATIC_URL = '/static/'
+CRISPY_TEMPLATE_PACK = 'boostrap4'
