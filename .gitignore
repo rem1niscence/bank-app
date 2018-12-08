@@ -103,5 +103,6 @@ venv.bak/
 # mypy
 .mypy_cache/
 
-# Custom
+# Project-specific
 .vscode/
+gathered_static_files/

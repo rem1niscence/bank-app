@@ -4,9 +4,10 @@
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <!-- Start 3rd Party libraries -->
+  <!-- Start 3rd Party CSS -->
   <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-  <!-- End 3rd Party libraries -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <!-- End 3rd Party CSS -->
   <link rel="stylesheet" href="{% static 'main.css' %}">
 
   <title>{% block title %}Bank app{% endblock title %}</title>
@@ -26,5 +27,13 @@
   <div class="container">
     {% block body %}{% endblock %}
   </div>
+
+  <!-- Start 3rd Party JS -->
+  <script
+  src="https://code.jquery.com/jquery-1.12.4.min.js"
+  integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ="
+  crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+  <!-- End 3rd Party JS -->
 </body>
 </html>

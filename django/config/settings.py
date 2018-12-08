@@ -33,6 +33,7 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     # 3rd Party
     'crispy_forms',
+    'bootstrap_datepicker',
 
     # Local Apps
     'user',
@@ -132,6 +133,7 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static')
 ]
+STATIC_ROOT = os.path.join(BASE_DIR, 'gathered_static_files')
 
 # Crispy forms settings
 CRISPY_TEMPLATE_PACK = 'bootstrap4'

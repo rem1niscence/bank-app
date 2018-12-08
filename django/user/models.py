@@ -17,7 +17,7 @@ class Profile(models.Model):
         code='nomatch')],
         max_length=11)
     date_of_birth = models.DateField()
-    name = models.CharField(max_length=30)
+    first_name = models.CharField(max_length=30)
     last_name = models.CharField(max_length=50)
     phone_number = models.CharField(validators=[RegexValidator(
         regex='^(809|829|849)[0-9]{7}$',
@@ -31,7 +31,7 @@ class Profile(models.Model):
         (MALE, 'Hombre'),
         (FEMALE, 'Mujer'),
     )
-    gender = models.IntegerField(choices=GENDERS, default=MALE)
+    gender = models.IntegerField(choices=GENDERS, default=MALE,)
 
     # The following two methods are for when an user is created, automatically
     # fire the creation of the Profile model, saving all the related user info.

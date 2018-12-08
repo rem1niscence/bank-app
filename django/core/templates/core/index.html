@@ -1,5 +1,9 @@
 {% extends 'base.html' %}
 
 {% block body %}
-  <p id="test">Template is working</p>
+  {% if user.is_authenticated %}
+    <p>Hello {{ user.username }}</p>
+    {% else %}
+    <p>Log in to see more info</p>
+  {% endif %}
 {% endblock body %}
