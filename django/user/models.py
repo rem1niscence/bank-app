@@ -42,7 +42,8 @@ class Profile(models.Model):
 
     @receiver(post_save, sender=get_user_model())
     def save_user_profile(sender, instance, **kwargs):
-        instance.profile.save()
+        if not instance.is_superuser:
+            instance.profile.save()
 
     def get_age(self):
         return timezone.now().year - self.date_of_birth.year
@@ -54,10 +55,17 @@ class Profile(models.Model):
 class SecurityQuestion(models.Model):
     question = models.CharField(max_length=200)
     answer = models.CharField(max_length=200)
-    user = models.ForeignKey('Profile', on_delete=models.CASCADE)
+    profile = models.ForeignKey('Profile', on_delete=models.CASCADE)
 
     def __str__(self):
-        return f'{self.user.__str__()} - {self.question} '
+        return f'{self.profile.__str__()} - {self.question} '
 
     class Meta:
-        unique_together = ('question', 'user')
+        unique_together = ('question', 'profile')
+
+
+class LoginLog(models.Model):
+    profile = models.ForeignKey(
+        'Profile', on_delete=models.CASCADE)
+    timestamp = models.DateTimeField(auto_now_add=True)
+    ip = models.CharField(max_length=30)

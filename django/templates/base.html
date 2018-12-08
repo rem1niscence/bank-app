@@ -16,7 +16,7 @@
       <a href="{% url 'core:home' %}">Bank App</a>
       <ul class="navbar-nav ml-auto">
         {% if user.is_authenticated %}
-          <li class="nav-item"><a href="#" class="nav-link">Logout</a></li>
+          <li class="nav-item"><a href="{% url 'user:logout' %}" class="nav-link">Logout</a></li>
         {% else %}
           <li class="nav-item"><a href="{% url 'user:login' %}" class="nav-link">Login</a></li>
           <li class="nav-item"><a href="{% url 'user:register' %}" class="nav-link">Register</a></li>
