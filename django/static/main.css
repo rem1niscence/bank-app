@@ -1,3 +1,7 @@
+nav.navbar {
+  margin-bottom: 1em;
+}
+
 #test {
   color: red;
 }

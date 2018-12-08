@@ -6,6 +6,6 @@ import user.urls
 urlpatterns = [
     path('admin/', admin.site.urls),
     # path('/user', )
-    path('user', include(user.urls, namespace='user')),
+    path('user/', include(user.urls, namespace='user')),
     path('', include(core.urls, namespace='core')),
 ]
