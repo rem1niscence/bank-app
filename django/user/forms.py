@@ -26,6 +26,27 @@ class UserCreationFormCustom(UserCreationForm):
         return user
 
 
+class UpdateUserForm(forms.ModelForm):
+    first_name = forms.CharField()
+    last_name = forms.CharField()
+    email = forms.EmailField()
+
+    class Meta:
+        model = get_user_model()
+        fields = ('first_name', 'last_name',
+                  'email')
+
+    def save(self, commit=True):
+        user = super(UpdateUserForm, self).save(commit=False)
+        user.email = self.cleaned_data['email']
+        user.first_name = self.cleaned_data['first_name']
+        user.last_name = self.cleaned_data['last_name']
+
+        if commit:
+            user.save()
+        return user
+
+
 class ProfileForm(forms.ModelForm):
     birth_date = forms.DateField(
         widget=forms.TextInput(attrs={'type': 'date'}))
@@ -37,3 +58,7 @@ class ProfileForm(forms.ModelForm):
     class Meta:
         model = Profile
         fields = ('id_card', 'gender', 'birth_date', 'phone_number')
+
+
+class PasswordForm(forms.Form):
+    password = forms.CharField(widget=forms.PasswordInput)
