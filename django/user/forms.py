@@ -3,16 +3,11 @@ from django.contrib.auth import get_user_model
 from user.models import Profile
 
 
-class BankRegisterForm(forms.ModelForm):
+class ProfileForm(forms.ModelForm):
     user = forms.ModelChoiceField(
         widget=forms.HiddenInput,
         queryset=get_user_model().objects.all(),
         disabled=True
-    )
-
-    gender = forms.ChoiceField(
-        widget=forms.RadioSelect,
-        choices=Profile.GENDERS
     )
 
     date_of_birth = forms.DateField(
@@ -20,5 +15,4 @@ class BankRegisterForm(forms.ModelForm):
 
     class Meta:
         model = Profile
-        fields = ['first_name', 'last_name',
-                  'id_card', 'phone_number', 'date_of_birth']
+        fields = '__all__'
