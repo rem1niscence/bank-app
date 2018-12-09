@@ -15,7 +15,7 @@ class CustomLoginView(LoginView):
 
 @transaction.atomic
 def registrationFormExtended(request):
-    register_url = 'user/register_extended.html'
+    register_url = 'user/register.html'
     if request.method == 'POST':
         user_form = UserCreationFormCustom(request.POST)
         profile_form = ProfileForm(request.POST)
@@ -28,8 +28,8 @@ def registrationFormExtended(request):
             user.profile.phone_number = \
                 profile_form.cleaned_data['phone_number']
             user.profile.gender = profile_form.cleaned_data['gender']
-            user.profile.date_of_birth = \
-                profile_form.cleaned_data['date_of_birth']
+            user.profile.birth_date = \
+                profile_form.cleaned_data['birth_date']
             user.save()
             return redirect(to='user:login')
         return render(request, register_url, context={

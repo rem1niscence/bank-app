@@ -18,22 +18,28 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Profile',
             fields=[
-                ('user', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, primary_key=True, serialize=False, to=settings.AUTH_USER_MODEL)),
-                ('id_card', models.CharField(max_length=11, validators=[django.core.validators.RegexValidator(code='nomatch', message='La cedula debe contener exactamente 11 digitos', regex='^[0-9]{11}$')])),
+                ('user', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE,
+                                              primary_key=True, serialize=False, to=settings.AUTH_USER_MODEL)),
+                ('id_card', models.CharField(max_length=11, validators=[django.core.validators.RegexValidator(
+                    code='nomatch', message='La cedula debe contener exactamente 11 digitos', regex='^[0-9]{11}$')])),
                 ('date_of_birth', models.DateField()),
                 ('name', models.CharField(max_length=30)),
                 ('last_name', models.CharField(max_length=50)),
-                ('phone_number', models.CharField(max_length=10, validators=[django.core.validators.RegexValidator(code='nomatch', message='Debe ser un numero dominicano de 10 digitos', regex='^(809|829|849)[0-9]{7}$')])),
-                ('gender', models.IntegerField(choices=[(0, 'Hombre'), (1, 'Mujer')], default=0)),
+                ('phone_number', models.CharField(max_length=10, validators=[django.core.validators.RegexValidator(
+                    code='nomatch', message='Debe ser un numero dominicano de 10 digitos', regex='^(809|829|849)[0-9]{7}$')])),
+                ('gender', models.IntegerField(choices=[
+                 (0, 'Hombre'), (1, 'Mujer')], default=0)),
             ],
         ),
         migrations.CreateModel(
             name='SecurityQuestion',
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('id', models.AutoField(auto_created=True,
+                                        primary_key=True, serialize=False, verbose_name='ID')),
                 ('question', models.CharField(max_length=200)),
                 ('answer', models.CharField(max_length=200)),
-                ('user', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='user.Profile')),
+                ('user', models.ForeignKey(
+                    on_delete=django.db.models.deletion.CASCADE, to='user.Profile')),
             ],
         ),
         migrations.AlterUniqueTogether(

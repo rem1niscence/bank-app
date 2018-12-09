@@ -141,3 +141,12 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 LOGIN_URL = 'user:login'
 LOGIN_REDIRECT_URL = 'core:home'
 LOGOUT_REDIRECT_URL = 'core:home'
+
+# Email config using SendGrid as client
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.sendgrid.net'
+EMAIL_HOST_USER = 'apikey'
+EMAIL_HOST_PASSWORD = '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'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+DEFAULT_FROM_EMAIL = 'Bank App Team <noreply@bankapp.com>'

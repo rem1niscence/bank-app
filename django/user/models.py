@@ -17,7 +17,7 @@ class Profile(models.Model):
         code='nomatch')],
         max_length=11,
         blank=True)
-    date_of_birth = models.DateField(null=True, blank=True)
+    birth_date = models.DateField(null=True, blank=True)
     phone_number = models.CharField(validators=[RegexValidator(
         regex='^(809|829|849)[0-9]{7}$',
         message='Debe ser un numero dominicano de 10 digitos',
@@ -28,13 +28,13 @@ class Profile(models.Model):
     MALE = 0
     FEMALE = 1
     GENDERS = (
-        (MALE, 'Hombre'),
-        (FEMALE, 'Mujer'),
+        (MALE, 'Male'),
+        (FEMALE, 'Female'),
     )
     gender = models.IntegerField(choices=GENDERS, default=MALE)
 
     def get_age(self):
-        return timezone.now().year - self.date_of_birth.year
+        return timezone.now().year - self.birth_date.year
 
     def __str__(self):
         return f'{self.user}'

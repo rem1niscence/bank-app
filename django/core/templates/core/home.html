@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block body %}
+  {% if user.is_authenticated %}
+    <p>Hello {{ user.first_name }} {{ user.last_name }}</p>
+    <p>You were born in {{ user.profile.birth_date }}  and you are {{ user.profile.get_age }} years old</p>
+    <p>Username: {{ user.username}}</p>
+    <p>Phone number: {{ user.profile.phone_number }}</p>
+    <p>Gender: {{ user.profile.get_gender_display }}</p>
+    <p>Id card (cedula): {{ user.profile.id_card }}</p>
+    {% else %}
+    <p id="test">Log in to see more info</p>
+  {% endif %}
+{% endblock body %}

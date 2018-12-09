@@ -27,7 +27,7 @@ class UserCreationFormCustom(UserCreationForm):
 
 
 class ProfileForm(forms.ModelForm):
-    date_of_birth = forms.DateField(
+    birth_date = forms.DateField(
         widget=forms.TextInput(attrs={'type': 'date'}))
 
     phone_number = forms.CharField(label='Numero de telefono', error_messages={
@@ -36,4 +36,4 @@ class ProfileForm(forms.ModelForm):
 
     class Meta:
         model = Profile
-        fields = ('id_card', 'gender', 'date_of_birth', 'phone_number')
+        fields = ('id_card', 'gender', 'birth_date', 'phone_number')

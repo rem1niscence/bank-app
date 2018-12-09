@@ -1,9 +1,0 @@
-{% extends 'base.html' %}
-
-{% block body %}
-  {% if user.is_authenticated %}
-    <p>Hello {{ user.username }}</p>
-    {% else %}
-    <p>Log in to see more info</p>
-  {% endif %}
-{% endblock body %}
