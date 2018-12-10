@@ -104,5 +104,6 @@ venv.bak/
 .mypy_cache/
 
 # Project-specific
+secrets.py
 .vscode/
 gathered_static_files/

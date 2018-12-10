@@ -53,7 +53,7 @@ class ProfileForm(forms.ModelForm):
 
     phone_number = forms.CharField(label='Numero de telefono', error_messages={
         'nomatch': 'Must be a 10 digits dominican number'
-    })
+    }, max_length=10)
 
     class Meta:
         model = Profile

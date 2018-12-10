@@ -1,3 +1,7 @@
+try:
+    from . import secrets
+except ImportError:
+    pass  # No local_settings file
 """
 Django settings for config project.
 
@@ -25,7 +29,7 @@ SECRET_KEY = 'h*enl(=7eaabfy=3!jgo)4_zu2ef_#l1al5g*tab7^#dx_9hi!'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['10.0.0.13']
+ALLOWED_HOSTS = ['10.0.0.22', '127.0.0.1']
 
 
 # Application definition
@@ -146,7 +150,7 @@ LOGOUT_REDIRECT_URL = 'core:home'
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.sendgrid.net'
 EMAIL_HOST_USER = 'apikey'
-EMAIL_HOST_PASSWORD = ''
+EMAIL_HOST_PASSWORD = secrets.email_api_key
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 DEFAULT_FROM_EMAIL = 'Bank App Team <noreply@bankapp.com>'

@@ -1,6 +1,3 @@
-from django.contrib.auth.views import LoginView
-from django.contrib.auth.signals import user_logged_in
-from django.dispatch import receiver
 from django.db import transaction
 from django.shortcuts import render
 from django.shortcuts import redirect
@@ -8,24 +5,13 @@ from django.contrib.auth.hashers import check_password
 from django.contrib.auth.decorators import login_required
 from user.forms import (
     ProfileForm, UserCreationFormCustom, UpdateUserForm, PasswordForm)
-from user.models import Profile, LoginLog
-
-
-class CustomLoginView(LoginView):
-    @receiver(user_logged_in)
-    def logged_in(sender, user, request, **kwargs):
-        if not user.is_superuser:
-            LoginLog.objects.create(
-                profile=user.profile,
-                ip=request.META['REMOTE_ADDR'],
-                user_agent=request.META['HTTP_USER_AGENT'],
-                locale=request.META['LC_IDENTIFICATION'])
 
 
 def update_user_and_profile(user_form, profile_form):
     user = user_form.save()
     # load the profile instance created by the signal
     user.refresh_from_db
+
     user.profile.id_card = profile_form.cleaned_data['id_card']
     user.profile.phone_number = \
         profile_form.cleaned_data['phone_number']
@@ -37,54 +23,56 @@ def update_user_and_profile(user_form, profile_form):
 
 @transaction.atomic
 def registrationFormExtended(request):
-    register_url = 'user/register.html'
     if request.method == 'POST':
         user_form = UserCreationFormCustom(request.POST)
         profile_form = ProfileForm(request.POST)
         if user_form.is_valid() and profile_form.is_valid():
             update_user_and_profile(user_form, profile_form)
             return redirect(to='user:login')
-        return render(request, register_url, context={
-            'user_form': user_form,
-            'profile_form': profile_form
-        })
-    return render(request, register_url, context={
-        'user_form': UserCreationFormCustom(),
-        'profile_form': ProfileForm(),
-    })
+    else:
+        user_form = UserCreationFormCustom()
+        profile_form = ProfileForm()
+
+    context = {
+        'user_form': user_form,
+        'profile_form': profile_form
+    }
+    return render(request, 'user/register.html', context=context)
 
 
 @login_required
 @transaction.atomic
 def edit_user_info(request):
-    register_url = 'user/edit_user.html'
-    profile = Profile.objects.get(pk=request.user.id)
+    msg = None
+    msg_type = None
     if request.method == 'POST':
         user_form = UpdateUserForm(request.POST, instance=request.user)
-        profile_form = ProfileForm(request.POST, instance=profile)
+        profile_form = ProfileForm(request.POST, instance=request.user.profile)
         password_form = PasswordForm(request.POST)
 
-        if user_form.is_valid() and profile_form.is_valid() and \
-                password_form.is_valid():
-            if check_password(password_form.cleaned_data['password'],
-                              request.user.password):
+        forms_valid = user_form.is_valid() and profile_form.is_valid() and \
+            password_form.is_valid()
+        if forms_valid:
+            password_match = check_password(
+                password_form.cleaned_data['password'], request.user.password)
+            if password_match:
                 update_user_and_profile(user_form, profile_form)
                 msg = 'Changes successfully saved'
                 msg_type = 'SUCCESS'
             else:
                 msg = 'Password is incorrect'
                 msg_type = 'ERROR'
+    else:
+        user_form = UpdateUserForm(instance=request.user)
+        profile_form = ProfileForm(instance=request.user.profile)
+        password_form = PasswordForm()
 
-        return render(request, register_url, context={
-            'user_form': user_form,
-            'profile_form': profile_form,
-            'msg_type': msg_type,
-            'password_form': PasswordForm(),
-            'msg': msg
-        })
+    context = {
+        'user_form': user_form,
+        'profile_form': profile_form,
+        'password_form': password_form,
+        'msg': msg,
+        'msg_type': msg_type,
+    }
 
-    return render(request, register_url, context={
-        'user_form': UpdateUserForm(instance=request.user),
-        'profile_form': ProfileForm(instance=profile),
-        'password_form': PasswordForm()
-    })
+    return render(request, 'user/edit_user.html', context=context)

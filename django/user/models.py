@@ -4,6 +4,7 @@ from django.contrib.auth import get_user_model
 from django.utils import timezone
 from django.dispatch import receiver
 from django.db.models.signals import post_save
+from django.contrib.auth.signals import user_logged_in
 
 
 class Profile(models.Model):
@@ -74,3 +75,12 @@ class LoginLog(models.Model):
 
     def __str__(self):
         return f'{self.profile.user} | {self.timestamp}'
+
+    @receiver(user_logged_in)
+    def logged_in(sender, user, request, **kwargs):
+        if not user.is_superuser:
+            LoginLog.objects.create(
+                profile=user.profile,
+                ip=request.META['REMOTE_ADDR'],
+                user_agent=request.META['HTTP_USER_AGENT'],
+                locale=request.META['LC_IDENTIFICATION'])
