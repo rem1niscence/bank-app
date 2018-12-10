@@ -17,6 +17,19 @@ class CustomLoginView(LoginView):
         print(f'User: {user} has logged in')
 
 
+def update_user_and_profile(user_form, profile_form):
+    user = user_form.save()
+    # load the profile instance created by the signal
+    user.refresh_from_db
+    user.profile.id_card = profile_form.cleaned_data['id_card']
+    user.profile.phone_number = \
+        profile_form.cleaned_data['phone_number']
+    user.profile.gender = profile_form.cleaned_data['gender']
+    user.profile.birth_date = \
+        profile_form.cleaned_data['birth_date']
+    user.save()
+
+
 @transaction.atomic
 def registrationFormExtended(request):
     register_url = 'user/register.html'
@@ -24,17 +37,7 @@ def registrationFormExtended(request):
         user_form = UserCreationFormCustom(request.POST)
         profile_form = ProfileForm(request.POST)
         if user_form.is_valid() and profile_form.is_valid():
-            user = user_form.save()
-            # load the profile instance created by the signal
-            user.refresh_from_db()
-
-            user.profile.id_card = profile_form.cleaned_data['id_card']
-            user.profile.phone_number = \
-                profile_form.cleaned_data['phone_number']
-            user.profile.gender = profile_form.cleaned_data['gender']
-            user.profile.birth_date = \
-                profile_form.cleaned_data['birth_date']
-            user.save()
+            update_user_and_profile(user_form, profile_form)
             return redirect(to='user:login')
         return render(request, register_url, context={
             'user_form': user_form,
@@ -59,18 +62,7 @@ def edit_user_info(request):
                 password_form.is_valid():
             if check_password(password_form.cleaned_data['password'],
                               request.user.password):
-
-                user = user_form.save()
-                # load the profile instance created by the signal
-                user.refresh_from_db()
-
-                user.profile.id_card = profile_form.cleaned_data['id_card']
-                user.profile.phone_number = \
-                    profile_form.cleaned_data['phone_number']
-                user.profile.gender = profile_form.cleaned_data['gender']
-                user.profile.birth_date = \
-                    profile_form.cleaned_data['birth_date']
-                user.save()
+                update_user_and_profile(user_form, profile_form)
                 msg = 'Info successfully updated'
                 msg_type = 'SUCCESS'
             else:
