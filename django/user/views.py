@@ -5,16 +5,21 @@ from django.db import transaction
 from django.shortcuts import render
 from django.shortcuts import redirect
 from django.contrib.auth.hashers import check_password
+from django.contrib.auth.decorators import login_required
 from user.forms import (
     ProfileForm, UserCreationFormCustom, UpdateUserForm, PasswordForm)
-from user.models import Profile
-from django.contrib.auth.decorators import login_required
+from user.models import Profile, LoginLog
 
 
 class CustomLoginView(LoginView):
     @receiver(user_logged_in)
     def logged_in(sender, user, request, **kwargs):
-        print(f'User: {user} has logged in')
+        if not user.is_superuser:
+            LoginLog.objects.create(
+                profile=user.profile,
+                ip=request.META['REMOTE_ADDR'],
+                user_agent=request.META['HTTP_USER_AGENT'],
+                locale=request.META['LC_IDENTIFICATION'])
 
 
 def update_user_and_profile(user_form, profile_form):
@@ -58,17 +63,18 @@ def edit_user_info(request):
         user_form = UpdateUserForm(request.POST, instance=request.user)
         profile_form = ProfileForm(request.POST, instance=profile)
         password_form = PasswordForm(request.POST)
+
         if user_form.is_valid() and profile_form.is_valid() and \
                 password_form.is_valid():
             if check_password(password_form.cleaned_data['password'],
                               request.user.password):
                 update_user_and_profile(user_form, profile_form)
-                msg = 'Info successfully updated'
+                msg = 'Changes successfully saved'
                 msg_type = 'SUCCESS'
             else:
-                print('password does not match')
                 msg = 'Password is incorrect'
                 msg_type = 'ERROR'
+
         return render(request, register_url, context={
             'user_form': user_form,
             'profile_form': profile_form,

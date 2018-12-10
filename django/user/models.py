@@ -69,3 +69,8 @@ class LoginLog(models.Model):
         'Profile', on_delete=models.CASCADE)
     timestamp = models.DateTimeField(auto_now_add=True)
     ip = models.CharField(max_length=30)
+    user_agent = models.CharField(max_length=150, blank=True)
+    locale = models.CharField(max_length=10, blank=True)
+
+    def __str__(self):
+        return f'{self.profile.user} | {self.timestamp}'
