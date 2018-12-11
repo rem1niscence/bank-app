@@ -148,9 +148,9 @@ LOGOUT_REDIRECT_URL = 'core:home'
 
 # Email config using SendGrid as client
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.sendgrid.net'
-EMAIL_HOST_USER = 'apikey'
+EMAIL_HOST = 'in-v3.mailjet.com'
+EMAIL_HOST_USER = '56091400179c259db9007a610df34d7c'
 EMAIL_HOST_PASSWORD = secrets.email_api_key
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-DEFAULT_FROM_EMAIL = 'Bank App Team <noreply@bankapp.com>'
+DEFAULT_FROM_EMAIL = 'Bank App Team <cvbot2@outlook.com>'
