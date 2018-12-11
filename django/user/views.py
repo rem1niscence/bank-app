@@ -27,26 +27,13 @@ def login_view(request):
 
 
 @transaction.atomic
-def update_user_and_profile(user_form, profile_form):
-    user = user_form.save()
-    # load the profile instance created by the signal
-    user.refresh_from_db
-
-    user.profile.id_card = profile_form.cleaned_data['id_card']
-    user.profile.phone_number = \
-        profile_form.cleaned_data['phone_number']
-    user.profile.gender = profile_form.cleaned_data['gender']
-    user.profile.birth_date = \
-        profile_form.cleaned_data['birth_date']
-    user.save()
-
-
 def registrationFormExtended(request):
     if request.method == 'POST':
         user_form = UserCreationFormCustom(request.POST)
         profile_form = ProfileForm(request.POST)
         if user_form.is_valid() and profile_form.is_valid():
-            update_user_and_profile(user_form, profile_form)
+            user = user_form.save()
+            profile_form.save(user)
             return redirect(to=settings.LOGIN_URL)
     else:
         user_form = UserCreationFormCustom()
@@ -60,20 +47,18 @@ def registrationFormExtended(request):
 
 
 @login_required
+@transaction.atomic
 def edit_user_info(request):
     user = request.user
     if request.method == 'POST':
         user_form = UpdateUserForm(request.POST, instance=user)
         profile_form = ProfileForm(request.POST, instance=user.profile)
-        password_form = PasswordForm(request.POST)
-
-        forms_valid = user_form.is_valid() and profile_form.is_valid() and \
-            password_form.is_valid()
-        if forms_valid:
+        if user_form.is_valid() and profile_form.is_valid():
             password_match = check_password(
-                password_form.cleaned_data['password'], user.password)
+                request.POST['password'], user.password)
             if password_match:
-                update_user_and_profile(user_form, profile_form)
+                user = user_form.save()
+                profile_form.save(user)
                 msg = 'Changes successfully saved'
                 msg_type = 'SUCCESS'
             else:
@@ -82,14 +67,13 @@ def edit_user_info(request):
     else:
         user_form = UpdateUserForm(instance=user)
         profile_form = ProfileForm(instance=user.profile)
-        password_form = PasswordForm()
         msg = None
         msg_type = None
 
     context = {
         'user_form': user_form,
         'profile_form': profile_form,
-        'password_form': password_form,
+        'password_form': PasswordForm(),
         'msg': msg,
         'msg_type': msg_type,
     }

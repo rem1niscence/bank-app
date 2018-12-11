@@ -59,6 +59,18 @@ class ProfileForm(forms.ModelForm):
         model = Profile
         fields = ('id_card', 'gender', 'birth_date', 'phone_number')
 
+    def save(self, user, commit=True):
+        profile_form = super(ProfileForm, self).save(commit=False)
+        profile = Profile.objects.get(pk=user.id)
+
+        profile.id_card = profile_form.id_card
+        profile.phone_number = profile_form.phone_number
+        profile.gender = profile_form.gender
+        profile.birth_date = profile_form.birth_date
+        if commit:
+            profile.save()
+        return profile
+
 
 class PasswordForm(forms.Form):
     password = forms.CharField(widget=forms.PasswordInput)
