@@ -37,7 +37,6 @@ ALLOWED_HOSTS = ['10.0.0.22', '127.0.0.1']
 INSTALLED_APPS = [
     # 3rd Party
     'crispy_forms',
-    'bootstrap_datepicker',
 
     # Local Apps
     'user',
@@ -146,11 +145,11 @@ LOGIN_URL = 'user:login'
 LOGIN_REDIRECT_URL = 'core:home'
 LOGOUT_REDIRECT_URL = 'core:home'
 
-# Email config using SendGrid as client
+# Email config using Sendgrid as client
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'in-v3.mailjet.com'
-EMAIL_HOST_USER = '56091400179c259db9007a610df34d7c'
+EMAIL_HOST = 'smtp.sendgrid.net'
+EMAIL_HOST_USER = 'apikey'
 EMAIL_HOST_PASSWORD = secrets.email_api_key
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-DEFAULT_FROM_EMAIL = 'Bank App Team <cvbot2@outlook.com>'
+DEFAULT_FROM_EMAIL = 'Bank App Team <noreply@bankapp.com>'

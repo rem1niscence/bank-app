@@ -1,29 +1,11 @@
 from django.db import transaction
 from django.shortcuts import render
 from django.shortcuts import redirect
-from django.contrib.auth import login
 from django.contrib.auth.hashers import check_password
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.forms import AuthenticationForm
 from django.conf import settings
 from user.forms import (
     ProfileForm, UserCreationFormCustom, UpdateUserForm, PasswordForm)
-
-
-def login_view(request):
-    if request.method == 'POST':
-        login_form = AuthenticationForm(data=request.POST)
-        if login_form.is_valid():
-            login(request, login_form.get_user())
-            return redirect(to=settings.LOGIN_REDIRECT_URL)
-
-    else:
-        login_form = AuthenticationForm()
-
-    context = {
-        'login_form': login_form
-    }
-    return render(request, 'registration/login.html', context=context)
 
 
 @transaction.atomic
@@ -49,6 +31,8 @@ def registrationFormExtended(request):
 @login_required
 @transaction.atomic
 def edit_user_info(request):
+    msg = None
+    msg_type = None
     user = request.user
     if request.method == 'POST':
         user_form = UpdateUserForm(request.POST, instance=user)
@@ -67,8 +51,6 @@ def edit_user_info(request):
     else:
         user_form = UpdateUserForm(instance=user)
         profile_form = ProfileForm(instance=user.profile)
-        msg = None
-        msg_type = None
 
     context = {
         'user_form': user_form,

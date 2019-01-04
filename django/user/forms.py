@@ -2,6 +2,7 @@ from django import forms
 from django.contrib.auth import get_user_model
 from user.models import Profile
 from django.contrib.auth.forms import UserCreationForm
+from django.utils.translation import gettext, gettext_lazy as _
 
 
 class UserCreationFormCustom(UserCreationForm):
@@ -70,6 +71,27 @@ class ProfileForm(forms.ModelForm):
         if commit:
             profile.save()
         return profile
+
+
+class OneTimeTokenForm(forms.ModelForm):
+    token = forms.IntegerField()
+    user = forms.ModelChoiceField(
+        widget=forms.HiddenInput,
+        queryset=get_user_model().objects.all(),
+        disabled=True
+    )
+
+    class Meta:
+        model = Profile
+        fields = ('token', 'user')
+
+    def validate_token(self):
+        token_form = super(OneTimeTokenForm, self).save(commit=False)
+        user = get_user_model().objects.get(pk=token_form.user)
+        if token_form.token == user.token:
+            return True
+        else:
+            return forms.ValidationError(_('Invalid token'))
 
 
 class PasswordForm(forms.Form):
