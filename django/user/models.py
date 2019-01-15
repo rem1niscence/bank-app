@@ -6,7 +6,6 @@ from django.dispatch import receiver
 from django.db.models.signals import post_save
 # from django.contrib.auth.signals import user_logged_in
 
-
 class Profile(models.Model):
     # Field for the Dom Rep identification card (commonly known)
     # as 'cedula'. Must have exactly 11 digits
@@ -18,6 +17,8 @@ class Profile(models.Model):
         code='nomatch')],
         max_length=11,
         blank=True)
+    core_id = models.IntegerField(blank=True, null=True)
+    """
     birth_date = models.DateField(null=True, blank=True)
     phone_number = models.CharField(validators=[RegexValidator(
         regex='^(809|829|849)[0-9]{7}$',
@@ -33,14 +34,13 @@ class Profile(models.Model):
         (FEMALE, 'Female'),
     )
     gender = models.IntegerField(choices=GENDERS, default=MALE)
-    core_id = models.IntegerField(blank=True, null=True)
 
     def get_age(self):
         return timezone.now().year - self.birth_date.year
 
     def get_full_name(self):
         return f'{self.user.first_name} {self.user.last_name}'
-
+"""
     def __str__(self):
         return f'{self.user}'
 
@@ -56,7 +56,7 @@ class Profile(models.Model):
         if not instance.is_superuser:
             instance.profile.save()
 
-
+"""
 class SecurityQuestion(models.Model):
     question = models.CharField(max_length=200)
     answer = models.CharField(max_length=200)
@@ -67,7 +67,7 @@ class SecurityQuestion(models.Model):
 
     class Meta:
         unique_together = ('question', 'profile')
-
+"""
 
 class LoginLog(models.Model):
     profile = models.ForeignKey(

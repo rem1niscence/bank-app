@@ -49,50 +49,33 @@ class UpdateUserForm(forms.ModelForm):
 
 
 class ProfileForm(forms.ModelForm):
+    """
     birth_date = forms.DateField(
         widget=forms.TextInput(attrs={'type': 'date'}))
 
     phone_number = forms.CharField(label='Numero de telefono', error_messages={
         'nomatch': 'Must be a 10 digits dominican number'
     }, max_length=10)
+    """
 
     class Meta:
         model = Profile
-        fields = ('id_card', 'gender', 'birth_date', 'phone_number')
+        #fields = ('id_card', 'gender', 'birth_date', 'phone_number')
+        fields = ('id_card',)
 
     def save(self, user, commit=True):
         profile_form = super(ProfileForm, self).save(commit=False)
         profile = Profile.objects.get(pk=user.id)
 
         profile.id_card = profile_form.id_card
+        """
         profile.phone_number = profile_form.phone_number
         profile.gender = profile_form.gender
         profile.birth_date = profile_form.birth_date
+        """
         if commit:
             profile.save()
         return profile
-
-
-class OneTimeTokenForm(forms.ModelForm):
-    token = forms.IntegerField()
-    user = forms.ModelChoiceField(
-        widget=forms.HiddenInput,
-        queryset=get_user_model().objects.all(),
-        disabled=True
-    )
-
-    class Meta:
-        model = Profile
-        fields = ('token', 'user')
-
-    def validate_token(self):
-        token_form = super(OneTimeTokenForm, self).save(commit=False)
-        user = get_user_model().objects.get(pk=token_form.user)
-        if token_form.token == user.token:
-            return True
-        else:
-            return forms.ValidationError(_('Invalid token'))
-
 
 class PasswordForm(forms.Form):
     password = forms.CharField(widget=forms.PasswordInput)

@@ -16,14 +16,14 @@ def registrationFormExtended(request):
         if user_form.is_valid() and profile_form.is_valid():
             user = user_form.save()
             profile_form.save(user)
-            return redirect(to=settings.LOGIN_URL)
+            return redirect(to=settings.LOGIN_URL) #es lo mismo que poner 'login'
     else:
         user_form = UserCreationFormCustom()
         profile_form = ProfileForm()
-
+                
     context = {
         'user_form': user_form,
-        'profile_form': profile_form
+        'profile_form': profile_form,
     }
     return render(request, 'user/register.html', context=context)
 
