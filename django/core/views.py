@@ -1,6 +1,9 @@
 from django.views.generic import TemplateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from core.apis import get_client, get_accounts, get_account_movements
+from django.views.generic import FormView
+from core.forms import TransactionForm
+from django.shortcuts import render
 
 
 class HomeView(TemplateView):
@@ -33,6 +36,17 @@ class MovementHistoryView(LoginRequiredMixin, TemplateView):
             account_mov = get_account_movements(account)
             ctx['accounts'].update({account: account_mov})
         return ctx
+
+
+class TransactionView(LoginRequiredMixin, FormView):
+    form_class = TransactionForm
+    template_name = 'core/transactions.html'
+
+    def form_valid(self, form):
+        message = "Transferencia realizada con exito"
+        ctx = self.get_context_data()
+        ctx['message'] = message
+        return render(self.request, self.template_name, context=ctx)
 
 
 class CheckAccounts(LoginRequiredMixin, TemplateView):
