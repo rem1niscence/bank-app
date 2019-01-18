@@ -26,4 +26,4 @@ def get_account_movements(account_id):
     url = 'https://apitest20190112092531.azurewebsites.' \
         f'net/api/movimientos/{account_id}'
     req = requests.get(url)
-    return req.json()
+    res = req.json()

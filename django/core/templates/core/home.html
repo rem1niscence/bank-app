@@ -5,7 +5,17 @@
   <h1> Bienvenido de nuevo {{ client.Nombre }} {{ client.Apellido }} </h1>
     <div class="col-sm-12">
       <div class="text-center">
-        <button class="btn btn-lg btn-primary mx-auto">Historial de Movimientos</button>
+        <a class="btn btn-lg btn-primary mx-auto" href="{% url "core:mov_history" %}">Historial de Movimientos</a>
+      </div>
+      <hr>
+      <div class="text-center">
+        <a class="btn btn-lg btn-primary mx-auto" href="{% url "core:check_accounts" %}">Consultar cuentas</a>
+      </div>
+      </div>
+      <hr>
+      <div class="text-center">
+        <a class="btn btn-lg btn-primary mx-auto" href="{% url "core:check_accounts" %}">Realizar transaccion</a>
+      </div>
       </div>
     </div>
 

@@ -33,3 +33,15 @@ class MovementHistoryView(LoginRequiredMixin, TemplateView):
             account_mov = get_account_movements(account)
             ctx['accounts'].update({account: account_mov})
         return ctx
+
+
+class CheckAccounts(LoginRequiredMixin, TemplateView):
+    template_name = 'core/accounts.html'
+
+    def get_context_data(self):
+        ctx = super(CheckAccounts, self).get_context_data()
+        core_id = self.request.user.profile.core_id
+        ctx['client'] = get_client(self.request.user.profile.core_id)
+        ctx['accounts'] = get_accounts(core_id)
+
+        return ctx

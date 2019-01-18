@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block title %}Cuentas{% endblock title %}
+
+{% block body %}
+  <h1>Cuentas de {{ client.Nombre}} {{ client.Apellido }}</h1>
+
+    <table class="table table-striped">
+      <thead>
+        <th scope="col">Tipo</th>
+        <th scope="col">Saldo</th>
+        <th scope="col">Numero de Cuenta</th>
+      </thead>
+      <tbody>
+        {% for account in accounts %}
+          <tr>
+            <td>{{ account.Tipo }}</th>
+            <td>{{ account.Saldo }}</th>
+            <td>{{ account.NumeroCuenta }}</th>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+
+  <a class="btn btn-primary" href="{% url "core:home" %}">Volver a inicio</a></div>
+{% endblock body %}
