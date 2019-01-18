@@ -1,15 +1,106 @@
-{% extends 'base.html' %}
-
-{% block body %}
   {% if user.is_authenticated %}
-  <h1> Bienvenido de nuevo {{ client.Nombre }} {{ client.Apellido }} </h1>
-    <div class="col-sm-12">
-      <div class="text-center">
-        <button class="btn btn-lg btn-primary mx-auto">Historial de Movimientos</button>
-      </div>
-    </div>
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- start of    bootstrap section-->
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+    <!-- end of     bootstrap section -->
 
+    <!-- Para usar los iconos de google-->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <title> Menu Principal </title>
+</head>
+<body>
+    <!-- start of    bootstrap section-->
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+    <!-- end of     bootstrap section -->   
+
+<!-- Logo y seccion de Bienvenido-->
+
+<!-- Navigation -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark static-top">
+    <div class="container">
+        <a class="navbar-brand" href="#">
+            <img src="http://placehold.it/150x50?text=Logo" alt="">
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon">  </span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item active"> 
+                <i class="material-icons" style="font-size:36px; color: gray">person</i>
+            </li>
+            <li>
+                <p class = "nav-link" style="color: white;"> {{ client.Nombre }} {{ client.Apellido }} </p>
+            </li>
+            <li class="nav-item">
+                <div class = container style="padding-right: 1%;">
+                    <a class="material-icons" style="font-size:36px;color: gray" href="#"> settings </a>
+                </div>
+            </li>
+            <li class="nav-item">
+                <div class = container>
+                    <a class="material-icons" style="font-size:36px;color: gray" href="{% url 'logout' %}"> exit_to_app </a>
+                </div>
+            </li>        
+        </ul>
+        </div>
+    </div>
+</nav>
+
+
+
+<!-- FINAL DE Logo y seccion de Bienvenido-->
+
+    <!-- Menu de botones --> 
+    <div class="mx-auto" style="width: 1500px; padding-bottom: 5%; padding-top: 100px;" >
+        <div class = "container" style="padding: 80px; border: 2px solid lightslategray; "> 
+                <div class = container style="padding-bottom: 25px;">
+                        <h1 class="display-4"> ¡Bienvenido de nuevo {{ client.Nombre }} {{ client.Apellido }} a  WaWaWanKing!</h1> 
+                        <p class="lead" style="padding-top: 25px;">
+                                ¿Qué deseas hacer hoy?
+                        </p> 
+                </div>
+                <a href="#" class="btn btn-light btn-lg btn-block" role="button"> Consultar Cuentas </a>
+                <a href="#" class="btn btn-secondary btn-lg btn-block" role="button"> Historial de Transacciones </a>
+                <a href="#" class="btn btn-light btn-lg btn-block" role="button"> Realizar Transacciones </a>
+                <a href="#" class="btn btn-secondary btn-lg btn-block" role="button"> Configurar Cuenta </a>
+        </div>
+    </div>
+    <!-- FINAL del menu de botones -->
+
+    <!-- Footer -->
+    <footer class="page-footer font-small black">
+        <div background-color = "blue">
+        <!-- Copyright -->
+        <div class=" kilimanjaro_bottom_header_one section_padding_50 text-center">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <p>© All Rights Reserved by WaWaWanK</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Copyright -->
+        </div>
+    </footer>
+      <!-- Footer -->
+
+</body>
+</html>
     {% else %}
+{% extends 'base.html' %}
+{% block body %}
     <p id="test">Log in to see more info</p>
   {% endif %}
 {% endblock body %}

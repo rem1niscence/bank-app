@@ -1,0 +1,12 @@
+{% autoescape off %}
+Hola, {{ user.username }},
+Recibimos una solicitud para la creación de un usuario de internet banking, relacionado a esta cuenta de correo electrónico. 
+Por favor, confirme que los datos son correctos. 
+Para activar su cuenta diríjase al link al final del documento.
+
+{% for key, value in datos_cliente.items %}
+    {{key}} : {{value}}
+{% endfor %}
+
+http://{{ domain }}{% url 'activate' uidb64=uid token=token %}
+{% endautoescape %}

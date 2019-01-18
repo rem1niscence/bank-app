@@ -8,7 +8,7 @@ from core.apis import id_card_exists
 class UserCreationFormCustom(UserCreationForm):
     first_name = forms.CharField()
     last_name = forms.CharField()
-    email = forms.EmailField()
+    email = forms.EmailField(max_length=200, help_text='Required')
 
     class Meta:
         model = get_user_model()
