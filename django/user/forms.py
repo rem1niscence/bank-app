@@ -2,7 +2,7 @@ from django import forms
 from django.contrib.auth import get_user_model
 from user.models import Profile
 from django.contrib.auth.forms import UserCreationForm
-from django.utils.translation import gettext, gettext_lazy as _
+from core.apis import id_card_exists
 
 
 class UserCreationFormCustom(UserCreationForm):
@@ -60,7 +60,7 @@ class ProfileForm(forms.ModelForm):
 
     class Meta:
         model = Profile
-        #fields = ('id_card', 'gender', 'birth_date', 'phone_number')
+        # fields = ('id_card', 'gender', 'birth_date', 'phone_number')
         fields = ('id_card',)
 
     def save(self, user, commit=True):
@@ -76,6 +76,21 @@ class ProfileForm(forms.ModelForm):
         if commit:
             profile.save()
         return profile
+
+    def is_valid(self):
+        valid = super(ProfileForm, self).is_valid()
+        if not valid:
+            return valid
+
+        # Check if user exist on the database
+        check_id_card = id_card_exists(self.cleaned_data['id_card'])
+        if check_id_card['exito']:
+            self.core_id = check_id_card['mensaje']
+            return valid
+        else:
+            self.add_error('id_card', check_id_card['mensaje'])
+            return False
+
 
 class PasswordForm(forms.Form):
     password = forms.CharField(widget=forms.PasswordInput)
