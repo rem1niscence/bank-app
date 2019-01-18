@@ -2,18 +2,12 @@
 
 {% block body %}
   {% if user.is_authenticated %}
-  <h1> Bienvenido {{ user.username }} </h1>
-
-  
-  {% comment %} 
-    <p>Hello {{ user.profile.get_full_name }}</p>
-    <p>You were born in {{ user.profile.birth_date }}  and you are {{ user.profile.get_age }} years old</p>
-    <p>Username: {{ user.username}}</p>
-    <p>Phone number: {{ user.profile.phone_number }}</p>
-    <p>Gender: {{ user.profile.get_gender_display }}</p>
-    <p>Id card (cedula): {{ user.profile.id_card }}</p>
-  {% endcomment %}
-
+  <h1> Bienvenido de nuevo {{ client.Nombre }} {{ client.Apellido }} </h1>
+    <div class="col-sm-12">
+      <div class="text-center">
+        <button class="btn btn-lg btn-primary mx-auto">Historial de Movimientos</button>
+      </div>
+    </div>
 
     {% else %}
     <p id="test">Log in to see more info</p>

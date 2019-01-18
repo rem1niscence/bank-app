@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block title %}Historial de movimientos{% endblock title %}
+
+{% block body %}
+  <h1>Historial de movimientos</h1>
+
+  {% for key, value in accounts.items %}
+    <p>Cuenta: <span class="badge badge-secondary">{{ key }}</span></p>
+
+    <table class="table table-striped">
+      <thead>
+        <th scope="col">Cuenta emisor</th>
+        <th scope="col">Cuenta receptor</th>
+        <th scope="col">Tipo de movimiento</th>
+        <th scope="col">Monto</th>
+        <th scope="col">Banco</th>
+      </thead>
+      <tbody>
+        {% for movement in value %}
+        <tr>
+          <td>{{ movement.CuentaEmisor }}</th>
+          <td>{{ movement.CuentaReceptor }}</th>
+          <td>{{ movement.tipoMovimiento }}</th>
+          <td>{{ movement.Monto }}</th>
+          <td>{{ movement.Banco }}</th>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% endfor %}
+
+{% endblock body %}
