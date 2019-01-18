@@ -42,6 +42,12 @@ class TransactionView(LoginRequiredMixin, FormView):
     form_class = TransactionForm
     template_name = 'core/transactions.html'
 
+    def get_form(self):
+        if self.request.method == "POST":
+            user_data = {'user': self.request.user}
+            return TransactionForm(self.request.POST, user_data)
+        return TransactionForm
+
     def form_valid(self, form):
         message = "Transferencia realizada con exito"
         ctx = self.get_context_data()

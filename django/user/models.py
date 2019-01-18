@@ -1,10 +1,10 @@
 from django.db import models
 from django.core.validators import RegexValidator
 from django.contrib.auth import get_user_model
-from django.utils import timezone
 from django.dispatch import receiver
 from django.db.models.signals import post_save
 # from django.contrib.auth.signals import user_logged_in
+
 
 class Profile(models.Model):
     # Field for the Dom Rep identification card (commonly known)
@@ -41,6 +41,7 @@ class Profile(models.Model):
     def get_full_name(self):
         return f'{self.user.first_name} {self.user.last_name}'
 """
+
     def __str__(self):
         return f'{self.user}'
 
@@ -56,6 +57,7 @@ class Profile(models.Model):
         if not instance.is_superuser:
             instance.profile.save()
 
+
 """
 class SecurityQuestion(models.Model):
     question = models.CharField(max_length=200)
@@ -68,6 +70,7 @@ class SecurityQuestion(models.Model):
     class Meta:
         unique_together = ('question', 'profile')
 """
+
 
 class LoginLog(models.Model):
     profile = models.ForeignKey(
