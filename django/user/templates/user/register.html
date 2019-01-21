@@ -1,17 +1,21 @@
-{% extends 'base.html' %}
+{% extends "registration/base.html" %}
 {% load crispy_forms_tags %}
-
-{% block title %}Register - {{ block.super }} {% endblock title %}
-
-{% block body %}
-  <h1>Register to bank app</h1>
+{% block contenido %}
+<div class = "container" style="width:50%; margin-top: 10%; padding: 80px; border: 2px solid lightslategray;">
+        <div class = container style="padding-right: 1%; position: float; margin-left: 29%;">
+                <h1 class="display-4"> Registrarse </h1> 
+        </div>
     <form method="post">
-      {% csrf_token %}
-      {{user_form|crispy}}
-      <hr>
-      <h2>User details</h2>
-      {{profile_form|crispy}}
-      <button type="submit" class="btn btn-primary">Register</button>
-    </form>
+        {% csrf_token %}
+        {{user_form|crispy}}
+        <hr>
+        <h2>User details</h2>
+        {{profile_form|crispy}}
 
-{% endblock body %}
+        <button class = "btn btn-outline-info" type = "submit" style="position: float; margin-left: 37%; margin-top: 20px; width: 25%;"> Continuar </button>
+    </form>
+    <div style="margin-top: 25px;">
+        ¿Ya tienes una cuenta? <a href="{% url 'login' %}"> Inicia Sesión </a>
+    </div>
+</div>
+{% endblock contenido %}

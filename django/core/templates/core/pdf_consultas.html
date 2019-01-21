@@ -1,0 +1,92 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+    <head>
+        <title>Consulta de cuentas </title>
+        <style type="text/css">
+            body {
+                font-weight: 200;
+                font-size: 14px;
+            }
+            .header {
+                font-size: 20px;
+                font-weight: 100;
+                text-align: center;
+                color: #007cae;
+            }
+            .title {
+                font-size: 22px;
+                font-weight: 100;
+               /* text-align: right;*/
+               padding: 10px 20px 0px 20px;  
+            }
+            .title span {
+                color: #007cae;
+            }
+            .details {
+                padding: 10px 20px 0px 20px;
+                text-align: left !important;
+                /*margin-left: 40%;*/
+            }
+            .hrItem {
+                border: none;
+                height: 1px;
+                /* Set the hr color */
+                color: #333; /* old IE */
+                background-color: #fff; /* Modern Browsers */
+            }
+
+            table {
+                border-collapse: collapse;
+                width: 100%;
+                border: solid 2px gray;
+            }
+
+            th, td {
+                text-align: left;
+                padding: 8px;
+            }
+
+            tr:nth-child(even){background-color: #f2f2f2}
+
+            th {
+                background-color: #535454;
+                color: white;
+            }  
+    </style>
+    </head>
+    <body>
+        <h1> Internet Banking </h1>
+        <hr> </hr>
+        <h3> Consulta de cuentas </h3>
+        <h4> Usuario: {{nombre}} {{apellido}}</h4>
+        <h4> Fecha: {{Fecha|date:"F d, Y"}} </h4>
+        <table>
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Número de Cuenta</th>
+                    <th>Tipo de Cuenta</th>
+                    <th>Balance Disponible</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for account in accounts %}
+                    <tr>
+                        <td>-</td>
+                        <td  style="text-align:right;"> {{ account.NumeroCuenta }} </td>
+                        <td  style="text-align:right;"> {{ account.Tipo }} </th>
+                        <td  style="text-align:right;"> {{ account.Saldo }} </th>
+                    </tr>
+                {% endfor %}
+            </tbody>
+                <tr style="background-color: #729371">
+                    <td colspan="3"> Total </td>
+                    <td style="background-color:#9b5d51; font-weight: 900;">Balance Total</td>
+                </tr>
+                <!-- Aqui se despliegan los totales -->
+                <tr>
+                    <td colspan="4" style="text-align:right; text-decoration: underline; font-weight: 900;">{{ total_balances }}</td>
+                </tr>
+        </table>
+    </body>
+</html>

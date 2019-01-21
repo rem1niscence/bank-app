@@ -1,14 +1,18 @@
-{% extends 'base.html' %}
+{% extends "registration/base.html" %}
 {% load crispy_forms_tags %}
-
-{% block title %}Login - {{ block.super }} {% endblock title %}
-
-{% block body %}
-  <h1>Login</h1>
-    <form method="post">
-      {% csrf_token %}
-      {{form|crispy}}
-      <p><a href="{% url 'password_reset' %}">Forgot your password?</a></p>
-      <button type="submit" class="btn btn-primary">Login</button>
+{% block contenido %}
+<div class = "container" style="width:50%; margin-top: 10%; padding: 80px; border: 2px solid lightslategray;">
+        <div class = container style="padding-right: 1%; position: float; margin-left: 39%;">
+                <i class="material-icons" style="font-size: 90px; color: rgba(24, 23, 23, 0.76)">person</i>
+        </div>
+    <form method="POST">
+        {% csrf_token %}
+        {{form|crispy}} <!-- Estamos usando el default de admin que se llama "form"-->
+        <button class = "btn btn-outline-info" type = "submit" style="position: float; margin-left: 37%; margin-top: 20px; width: 25%;"> Acceder </button>
     </form>
-{% endblock body %}
+    <div style="margin-top: 25px;">
+        ¿Aún no tienes una cuenta? <a href="{% url 'user:register' %}"> Registrate </a>
+    </div>
+    <p><a href="{% url 'password_reset' %}">Forgot your password?</a></p>
+</div>
+{% endblock contenido%}

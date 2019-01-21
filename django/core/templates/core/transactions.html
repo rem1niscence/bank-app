@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}Realizar transaccion{% endblock title %}
+
+{% block body %}
+  <h1>Realizar transaccion</h1>
+
+    {% if message %}
+    <div class="alert alert-success" role="alert">{{ message }}</div>
+  {% endif %}
+
+  <form method="post">
+    {% csrf_token %}
+    {{ form | crispy }}
+    <input type="submit" class="btn btn-primary" value="Realizar transacccion">
+  </form>
+{% endblock body %}

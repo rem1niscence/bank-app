@@ -13,15 +13,7 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
 
-    <title> Historial de Transacciones </title>
-    <style>
-    .table-wrapper-scroll-y {
-        display: block;
-        max-height: 300px;
-        overflow-y: auto;
-        -ms-overflow-style: -ms-autohiding-scrollbar;
-    } 
-    </style> 
+    <title> Consultar Cuentas </title>
 </head>
 <body>
     <!-- start of    bootstrap section-->
@@ -52,13 +44,13 @@
                 <p class = "nav-link" style="color: white;"> {{user.first_name}} {{user.last_name}} </p>
             </li>
             <li class="nav-item">
-            <a class="nav-link" href="{% url 'core:check_accounts' %}">Consultar Cuentas</a>
+            <a class="nav-link" href="#">Consultar Cuentas</a>
             </li>
             <li class="nav-item">
-            <a class="nav-link" href="#"> Historial de transacciones </a>
+            <a class="nav-link" href="{% url 'core:mov_history' %}"> Historial de transacciones </a>
             </li>
             <li class="nav-item">
-            <a class="nav-link" href="% url 'core:make_transaction' %}"> Realizar Transacción </a>
+            <a class="nav-link" href="{% url 'core:make_transaction' %}"> Realizar Transacción </a>
             </li>
             <li class="nav-item">
                 <div class = container style="padding-right: 1%;">
@@ -78,53 +70,49 @@
 
 
 <!-- FINAL DE Logo y seccion de Bienvenido-->
+
+    <!-- Consultar Cuentas TABLA -->
     <div class="mx-auto" style="width: 1000px; padding-bottom: 5%; padding-top: 100px;" >
         <div class = "container" style="padding: 80px; border: 2px solid lightslategray; "> 
-            <h1 class="display-4"> Historial de Transacciones </h1>
+            <h1 class="display-4">Consultar Cuentas</h1>
             <hr> </hr>
             <p class="lead">
-                Este es su historial de transacciones. Sus movimientos estan organizados según la cuenta con la que los realizo.
+                    Estas son sus Cuentas activas en WaWaWanK. Haga click en Reporte PDF para general y descargar un Reporte
             </p>
-            {% for key, value in accounts.items %}
-              <p> Número de Cuenta: <span class="badge badge-secondary">{{ key }}</span></p>
-              <div class="table-wrapper-scroll-y">
-                  <div class="table-responsive">
-                      <table class="table table-bordered table-striped">
-                        <thead>
-                          <tr>
-                              <th class="th-sm" scope="col">#</th>
-                              <th class="th-sm" scope="col">Cuenta de Origen</th>
-                              <th class="th-sm" scope="col">Cuenta de Destino</th>
-                              <th class="th-sm" scope="col">Descripción</th> 
-                              <th class="th-sm" scope="col">Monto</th>
-                              <th class="th-sm" scope="col">Banco de cuenta destino</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                            {% for movement in value %}
-                          <tr>
-                              <th scope="row"> - </th>
-                              <td>{{ movement.CuentaEmisor }}</th>
-                              <td>{{ movement.CuentaReceptor }}</th>
-                              <td>{{ movement.tipoMovimiento }}</th>
-                              <td>{{ movement.Monto }}</th>
-                              <td>{{ movement.Banco }}</th>
-                          </tr>
-                          {% endfor %}
-                        </tbody>
-                      </table>
-                    </div>
-                </div>
-            {% endfor %}
-
-                <a href="{% url 'get-pdf-historial' %}" class="btn btn-primary btn-lg active" role="button" aria-pressed="true" style="
-                    float: right;
-                    width: 200px;
-                    margin: 25px 0px;
-                    "> 
-                    <i class="material-icons" style="font-size:20px;color:white">file_download </i> Reporte PDF </a>
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Número de Cuenta</th>
+                        <th scope="col">Tipo de Cuenta</th>
+                        <th scope="col">Balance Disponible</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for account in accounts %}
+                        <tr>
+                          <th scope="row">-</th>
+                          <td> {{ account.NumeroCuenta }} </th>
+                          <td> {{ account.Tipo }} </th>
+                          <td> {{ account.Saldo }} </th>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+                    <tr style="background-color:lightsteelblue;">
+                        <th scope="row" colspan="3"> Total </th>
+                        <td scope="col" style="text-align:right;">Balance Total</td>
+                    </tr>
+                    <!-- Aqui se despliegan los totales -->
+                    <tr>
+                        <td scope="col" colspan="4" style="text-align:right;">{{ total_balances }}</td>
+                    </tr>
+            </table>
+            <a href="{% url 'get-pdf-consulta' %}" class="btn btn-primary btn-lg active" role="button" aria-pressed="true"> 
+                <i class="material-icons" style="font-size:20px;color:white">file_download </i> Reporte PDF </a>
         </div>
-    </div> 
+    </div>
+    <!-- FINAL de Consultar Cuentas TABLA -->
+
     <!-- Footer -->
     <footer class="page-footer font-small black">
         <div background-color = "blue">

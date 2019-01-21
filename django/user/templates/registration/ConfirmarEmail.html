@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- start of    bootstrap section-->
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+    <!-- end of     bootstrap section -->
+
+    <!-- Para usar los iconos de google-->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+
+ 
+    <title> Email-resgistro </title>
+    <style>
+        .button {
+            background-color: #001f3f; /* Green */
+            border: none;
+            color: white;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+            -webkit-transition-duration: 0.4s; /* Safari */
+            transition-duration: 0.4s;
+        }
+
+        .button2:hover {
+            box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24),0 17px 50px 0 rgba(0,0,0,0.19);
+        }
+        body {
+            background-color: #f1f1f1;
+        }
+        a:link {
+            text-decoration: none;
+        }
+
+        a:visited {
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: none;
+            background-color: white;
+        }
+
+        a:active {
+            text-decoration: none;
+        }
+    </style>
+
+</head>
+<body>
+    <!-- start of    bootstrap section-->
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+    <!-- end of     bootstrap section -->   
+
+
+    <!-- Consultar Cuentas TABLA -->
+    <div class="mx-auto" style="width: 1000px; padding-bottom: 5%; padding-top: 100px;" >
+        <div class = "container" style="padding: 80px; border: 2px solid #f1f1f1; background-color: #f9f9f9;"> 
+            <h3 class="display-5" style="font-weight: bold; text-align:center;"> Gracias por registrarte </h3>
+            <hr> </hr>
+		<h3 class="display-4" style="font-weight: bold; text-align:center; text-align: justify;"> Accede a tu correo electrónico para activar tu cuenta. </h3>
+            <p class="lead" style="margin:30px;">
+            Asegurate de verificar los datos de tu cuenta bancaria, antes de activar tu cuenta de usuario de internet banking. Si tardas mucho en recibir el correo, asegurate de que tu
+		cuenta de correo electrónico no está bloqueando la llegada del email.
+            </p>
+            <a class="button button2" href="{% url 'login' %}" role="button" style="margin: 0 auto; width: 480px; display: flex; justify-content: center; font-family: Open Sans; font-size: 25px; margin-top: 70px"> Volver a la página principal </a>
+        </div>
+    </div>
+    <!-- FINAL de Consultar Cuentas TABLA -->
+
+    <!-- Footer -->
+    <footer class="page-footer font-small black">
+        <div background-color = "blue">
+        <!-- Copyright -->
+        <div class=" kilimanjaro_bottom_header_one section_padding_50 text-center">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <p>© All Rights Reserved by WaWaWanK</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Copyright -->
+        </div>
+    </footer>
+      <!-- Footer -->
+
+</body>
+</html>

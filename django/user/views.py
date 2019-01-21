@@ -6,7 +6,7 @@ from django.conf import settings
 from user.forms import (
     ProfileForm, UserCreationFormCustom, UpdateUserForm, PasswordForm)
 
-#para hacer lo del envio del email luego de que el usuario se registra 
+#para utilizar el servicio de mensajeria luego de que el usuario se registra (email de confirmacion de registro)
 from django.http import HttpResponse
 from django.contrib.auth import login, authenticate
 from django.contrib.sites.shortcuts import get_current_site
@@ -20,30 +20,37 @@ from django.core.mail import EmailMessage
 #para mandar los datos del cliente en el email
 from core.apis import id_card_exists, get_client, get_accounts, get_account_movements
 
+"""
+Las funciones que trataremos en esta vista son:
+1. registrationFormExtended
+2. activate
+3. edit_user_info
+"""
+
 @transaction.atomic
 def registrationFormExtended(request):
     if request.method == 'POST':
-        user_form = UserCreationFormCustom(request.POST)
-        profile_form = ProfileForm(request.POST)
-        if user_form.is_valid() and profile_form.is_valid():
+        user_form = UserCreationFormCustom(request.POST) #formulario para el modelo de usuario
+        profile_form = ProfileForm(request.POST)        #formulario para el modelo de PROFILE
+        if user_form.is_valid() and profile_form.is_valid(): #Comprueba si la info del form es valida
 
             user = user_form.save(commit=False)
-            user.is_active = False #parte del email system
-            user.save() #parte del email system
+            user.is_active = False #parte del email system. Mantiene al usuario inhabilitado hasta que se acceda al link de confirmacion de
+            user.save()             #usuario enviado por email. Si intenta logearse, no tendra acceso.
             
             profile = profile_form.save(user)
             profile.core_id = profile_form.core_id
             profile.save()
             #parte del email system
             
-            #primero conseguiremos la info del cliente que enviaremos a travez del email
+            #primero conseguiremos la informacion del cliente que enviaremos a traves del email
             cedula = profile_form.cleaned_data.get('id_card')
             cedula_json = id_card_exists(cedula)
             id_cliente = cedula_json['mensaje']
             cliente_json = get_client(id_cliente)
 
             current_site = get_current_site(request)
-            mail_subject = 'Activate your blog account.'
+            mail_subject = 'Activa tu cuenta de Internet Banking'
             message = render_to_string('acc_active_email.html', {
                 'datos_cliente': cliente_json,
                 'user': user,
@@ -56,7 +63,7 @@ def registrationFormExtended(request):
                         mail_subject, message, to=[to_email]
             )
             email.send()
-            return HttpResponse('Please confirm your email address to complete the registration')
+            return render(request, 'registration/ConfirmarEmail.html')
             #return redirect(to=settings.LOGIN_URL)
     else:
         user_form = UserCreationFormCustom()
@@ -79,7 +86,7 @@ def activate(request, uidb64, token):
         user.is_active = True
         user.save()
         login(request, user)
-        return HttpResponse('Thank you for your email confirmation. Now you can login your account.')
+        return render(request, 'user/LinkConfirmacion.html')
     else:
         return HttpResponse('Activation link is invalid!')
 

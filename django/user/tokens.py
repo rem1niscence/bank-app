@@ -7,3 +7,6 @@ class TokenGenerator(PasswordResetTokenGenerator):
             six.text_type(user.is_active)
         )
 account_activation_token = TokenGenerator()
+
+#TokenGenerator es utilizado para poder generar el link que se enviara por email,
+#para la activación de la cuenta

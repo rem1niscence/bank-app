@@ -27,3 +27,19 @@ def get_account_movements(account_id):
         f'net/api/movimientos/{account_id}'
     req = requests.get(url)
     return req.json()
+
+
+def make_transaction(data):
+    # Response Codes:
+    # -1 - Issuer account doesn't exist
+    # -2 - Receiver account doesn't exist
+    # -3 - Insufficient founds
+    url = 'https://apitest20190112092531.azurewebsites.net/api/transferencias'
+    req = requests.post(url, json={
+        'emisor': data['issuer'],
+        'receptor': data['receiver'],
+        'monto': data['amount'],
+        'banco': 'bank-app'
+    })
+    res = req.json()
+    return res

@@ -1,0 +1,63 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- start of    bootstrap section-->
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+    <!-- end of     bootstrap section -->
+
+    <!-- Para usar los iconos de google-->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <!-- despliega un titulo para la pagina si existe uno, si no despliega 'Ibanking' por default-->
+    {% if title %}
+        <title> {{title}} </title>
+    {% else %}
+        <title> Ibanking </title>
+    {% endif %}
+{% block estilo%} {% endblock estilo %}
+</head>
+<body>
+              <!-- ESTA PARTE ES PARA DESPLEGAR MESSAGES EN LOS FORMS, pop ups-->
+                  {% if messages %}
+                    {% for message in messages %}
+                        <div class = "alert alert-{{ message.tags }}"> <!-- bootstrap y django tiene un acuerdo para esto de los messages-->
+                        {{message}}
+                        </div>
+                    {% endfor %}
+                  {% endif %}
+                
+                  <!--AQUI TERMINA LA PARTE DEL POP UP-->
+                  {% block contenido %}{% endblock %}
+    
+    <!-- start of    bootstrap section-->
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+    <!-- end of     bootstrap section -->
+
+    <!-- Footer -->
+    <footer class="page-footer font-small black">
+        <div background-color = "blue">
+        <!-- Copyright -->
+        <div class=" kilimanjaro_bottom_header_one section_padding_50 text-center">
+            <div class="container" style="margin-top: 15%;">
+                <div class="row">
+                    <div class="col-12">
+                        <p>© All Rights Reserved by WaWaWanK</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Copyright -->
+        </div>
+    </footer>
+    <!-- Footer -->
+</body>
+</html>

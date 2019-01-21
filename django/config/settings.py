@@ -35,10 +35,10 @@ ALLOWED_HOSTS = ['10.0.0.22', '127.0.0.1', 'localhost']
 # Application definition
 
 INSTALLED_APPS = [
+    #registro de las aplicaciones que estamos usando en nuestro proyecto.
     # 3rd Party
     'crispy_forms',
-
-    # Local Apps
+    # Apps Locales
     'user',
     'core',
 
@@ -120,7 +120,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'America/Santo_Domingo'
+TIME_ZONE = 'America/Santo_Domingo' #configurada para mostrar la hora automática de esta zona.
 
 USE_I18N = True
 
@@ -140,12 +140,14 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'gathered_static_files')
 
 # Crispy forms settings
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
+#Crispy forms suele funcionar por defecto con bootstrap3, como estamos trabajando con bootstrap4,
+#cambiamos la configuración.
 
 LOGIN_URL = 'user:login'
-LOGIN_REDIRECT_URL = 'core:home'
-LOGOUT_REDIRECT_URL = 'core:home'
+LOGIN_REDIRECT_URL = 'core:home' #Página donde se redirige luego de iniciar sesión
+LOGOUT_REDIRECT_URL = 'core:home' #Página donde se redirige luego de cerrar sesión
 
-# Email config using Sendgrid as client
+# Configuraciones del sistema de EMAIL, usando Sendgrid como cliente
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.sendgrid.net'
 EMAIL_HOST_USER = 'apikey'

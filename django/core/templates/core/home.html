@@ -1,4 +1,3 @@
-  {% if user.is_authenticated %}
 <!DOCTYPE html>
 <html>
 <head>
@@ -12,7 +11,57 @@
 
     <!-- Para usar los iconos de google-->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <title> Menu Principal </title>
+
+    <title> Principal </title>
+    {% if user.is_authenticated %}
+
+    {% else %}
+    <style>
+        .button {
+            background-color: #984949;
+            border: none;
+            color: white;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+            -webkit-transition-duration: 0.4s; /* Safari */
+            transition-duration: 0.4s;
+        }
+        
+        .button2:hover {
+            box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24),0 17px 50px 0 rgba(0,0,0,0.19);
+        }
+        body {background-color: #3f576c;}
+        a:link {
+            text-decoration: none;
+        }
+        
+        a:visited {
+            text-decoration: none;
+        }
+        
+        a:hover {
+            text-decoration: none;
+            background-color: white;
+        }
+        
+        a:active {
+            text-decoration: none;
+        }
+        .container2 {
+            position: absolute;
+            top: 25%;
+            right: 80px;
+            width: 40%;
+            height: 50%;
+            background-color: #DDDDDD;
+        }
+    </style>
+    {% endif %}
 </head>
 <body>
     <!-- start of    bootstrap section-->
@@ -23,60 +72,78 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
     <!-- end of     bootstrap section -->   
 
+
+{% if user.is_authenticated %}
 <!-- Logo y seccion de Bienvenido-->
-
 <!-- Navigation -->
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark static-top">
-    <div class="container">
-        <a class="navbar-brand" href="#">
-            <img src="http://placehold.it/150x50?text=Logo" alt="">
-        </a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon">  </span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarResponsive">
-        <ul class="navbar-nav ml-auto">
-            <li class="nav-item active"> 
-                <i class="material-icons" style="font-size:36px; color: gray">person</i>
-            </li>
-            <li>
-                <p class = "nav-link" style="color: white;"> {{ client.Nombre }} {{ client.Apellido }} </p>
-            </li>
-            <li class="nav-item">
-                <div class = container style="padding-right: 1%;">
-                    <a class="material-icons" style="font-size:36px;color: gray" href="#"> settings </a>
-                </div>
-            </li>
-            <li class="nav-item">
-                <div class = container>
-                    <a class="material-icons" style="font-size:36px;color: gray" href="{% url 'logout' %}"> exit_to_app </a>
-                </div>
-            </li>        
-        </ul>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark static-top">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <img src="http://placehold.it/150x50?text=Logo" alt="">
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon">  </span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item active"> 
+                    <i class="material-icons" style="font-size:36px; color: gray">person</i>
+                </li>
+                <li>
+                    <p class = "nav-link" style="color: white;"> {{ client.Nombre }} {{ client.Apellido }} </p>
+                </li>
+                <li class="nav-item">
+                    <div class = container>
+                        <a class="material-icons" style="font-size:36px;color: gray" href="{% url 'logout' %}"> exit_to_app </a>
+                    </div>
+                </li>        
+            </ul>
+            </div>
         </div>
-    </div>
-</nav>
-
-
+    </nav>
 
 <!-- FINAL DE Logo y seccion de Bienvenido-->
 
     <!-- Menu de botones --> 
     <div class="mx-auto" style="width: 1500px; padding-bottom: 5%; padding-top: 100px;" >
         <div class = "container" style="padding: 80px; border: 2px solid lightslategray; "> 
-                <div class = container style="padding-bottom: 25px;">
-                        <h1 class="display-4"> ¡Bienvenido de nuevo {{ client.Nombre }} {{ client.Apellido }} a  WaWaWanKing!</h1> 
-                        <p class="lead" style="padding-top: 25px;">
-                                ¿Qué deseas hacer hoy?
-                        </p> 
-                </div>
-                <a href="#" class="btn btn-light btn-lg btn-block" role="button"> Consultar Cuentas </a>
-                <a href="#" class="btn btn-secondary btn-lg btn-block" role="button"> Historial de Transacciones </a>
-                <a href="#" class="btn btn-light btn-lg btn-block" role="button"> Realizar Transacciones </a>
-                <a href="#" class="btn btn-secondary btn-lg btn-block" role="button"> Configurar Cuenta </a>
+            <div class = container style="padding-bottom: 25px;">
+                    <h1 class="display-4"> ¡Bienvenido de nuevo {{ client.Nombre }} {{ client.Apellido }} a  WaWaWanKing!</h1> 
+                    <p class="lead" style="padding-top: 25px;">
+                            ¿Qué deseas hacer hoy?
+                    </p> 
+            </div>
+            <a href="{% url 'core:check_accounts' %}" class="btn btn-light btn-lg btn-block" role="button"> Consultar Cuentas </a>
+            <a href="{% url 'core:mov_history' %}" class="btn btn-secondary btn-lg btn-block" role="button"> Historial de Transacciones </a>
+            <a href="% url 'core:make_transaction' %}" class="btn btn-light btn-lg btn-block" role="button"> Realizar Transacciones </a>
+            <a href="{% url 'user:edit' %}" class="btn btn-secondary btn-lg btn-block" role="button"> Configurar Cuenta </a>
         </div>
     </div>
     <!-- FINAL del menu de botones -->
+
+    {% else %}
+          
+    <div style="width: 100%; padding-bottom: 5%; padding-top: 100px;" >
+            <div class = ".container-fluid" style="padding: 80px; width: 100%; border: 2px solid #f3e5e5; background-image: url('https://i.pinimg.com/originals/08/45/c1/0845c1b2846f5c429ba8169562bf2fc5.jpg')"> 
+                <div style="width:40%; border: solid 1px gray;">
+            <h3 class="display-1" style="font-weight: bold; text-align:center;"> Internet Banking </h3>
+                    <p class="lead" style="margin:30px; text-align: center;">
+                        Banco Miercoles (Banco 1).	
+                    </p>
+            </div>
+            <div class="container2">
+            <div style = "background-color: #a81311; width:100%; heigh: 100px; color:#a81311">
+                lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum vlorem ipsum
+                lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum vlorem ipsum
+            </div>
+            <a class="button button2" href="{% url 'login' %}" role="button" style="margin: 0 auto; width: 300px; display: flex; justify-content: center; font-family: Open Sans; font-size: 25px; border-radius: 12px; margin-top: 50px"> 
+            Iniciar Sesión </a>
+            <a class="button button2" href="{% url 'user:register' %}" role="button" style="margin: 0 auto; width: 300px; display: flex; justify-content: center; font-family: Open Sans; font-size: 25px; border-radius: 12px; margin-top: 30px"> 
+            Registrarse </a>
+            </div>
+            </div>
+        </div>
+        {% endif %}
 
     <!-- Footer -->
     <footer class="page-footer font-small black">
@@ -95,12 +162,6 @@
         </div>
     </footer>
       <!-- Footer -->
-
 </body>
 </html>
-    {% else %}
-{% extends 'base.html' %}
-{% block body %}
-    <p id="test">Log in to see more info</p>
-  {% endif %}
-{% endblock body %}
+   
